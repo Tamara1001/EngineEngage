@@ -338,15 +338,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.439294
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5000001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.503116
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -379,6 +379,22 @@ PrefabInstance:
     - target: {fileID: -4372093788385109707, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_Name
       value: ZombieModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 505485589189708005, guid: a4214d179c0076441b8085274670ea6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 505485589189708005, guid: a4214d179c0076441b8085274670ea6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 505485589189708005, guid: a4214d179c0076441b8085274670ea6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 505485589189708005, guid: a4214d179c0076441b8085274670ea6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_Name
@@ -519,7 +535,7 @@ MonoBehaviour:
   coinPrefab: {fileID: 3702275225171295952, guid: 6fb638dd9304e5c4e9fee3ef3591fcf0, type: 3}
   projectilePrefab: {fileID: 0}
   firePoint: {fileID: 0}
-  detectionRange: 10
+  detectionRange: 20
   attackRange: 2
   attackCooldown: 1.5
   originZone: 0

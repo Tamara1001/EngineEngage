@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI Kills;
     public TextMeshProUGUI ScoreText;
 
+    [Header("Walls to Unlock")]
+    public GameObject desertWall;
+    public GameObject snowWall;
+
     public int killsRequiredPerZone = 3;
     private int killCounter = 0;
     public EnemySpawner.ZoneType currentZone = EnemySpawner.ZoneType.Plains;
@@ -66,10 +70,12 @@ public class GameManager : MonoBehaviour
         {
             case EnemySpawner.ZoneType.Plains:
                 currentZone = EnemySpawner.ZoneType.Desert;
+                if (desertWall != null) desertWall.SetActive(false); // Unlock Desert
                 ActivateSpawnersForZone(EnemySpawner.ZoneType.Desert);
                 break;
             case EnemySpawner.ZoneType.Desert:
                 currentZone = EnemySpawner.ZoneType.Snow;
+                if (snowWall != null) snowWall.SetActive(false); // Unlock Snow
                 ActivateSpawnersForZone(EnemySpawner.ZoneType.Snow);
                 break;
             case EnemySpawner.ZoneType.Snow:
