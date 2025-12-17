@@ -21,10 +21,10 @@ public class Enemy : MonoBehaviour
     public enum EnemyState { Idle, Chase, Attack }
     public EnemyState currentState = EnemyState.Idle;
 
-    [SerializeField] private GameObject coinPrefab; // Coin prefab to drop
+    [SerializeField] private GameObject coinPrefab;
     [Header("Combat Settings")]
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private Transform firePoint; // Optional point to fire from
+    [SerializeField] private Transform firePoint; 
     [SerializeField] private float detectionRange = 10f;
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float attackCooldown = 1.5f;
@@ -36,13 +36,12 @@ public class Enemy : MonoBehaviour
     private float maxHealth;
     [SerializeField] private bool isRanged = false;
     
-    // Track which zone spawned this enemy
     [HideInInspector]
     public EnemySpawner.ZoneType originZone;
 
     private string deadTrigger = "Death";
     private string walkAnimationParameter = "MoveSpeed";
-    private string attackTrigger = "Attack"; // Assuming an attack trigger exists or will use boolean
+    private string attackTrigger = "Attack";
 
     void Start()
     {
@@ -51,7 +50,6 @@ public class Enemy : MonoBehaviour
         gameManager = FindFirstObjectByType<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         
-        // Stats are now set in Inspector (Health, Damage, MoveSpeed, IsRanged)
         maxHealth = health;
         zombieNavMeshAgent.speed = moveSpeed;
 
@@ -116,12 +114,12 @@ public class Enemy : MonoBehaviour
         if (distance > detectionRange)
         {
             currentState = EnemyState.Idle;
-            zombieNavMeshAgent.SetDestination(transform.position); // Stop moving
+            zombieNavMeshAgent.SetDestination(transform.position);
         }
         else if (distance < attackRange)
         {
             currentState = EnemyState.Attack;
-            zombieNavMeshAgent.SetDestination(transform.position); // Stop moving
+            zombieNavMeshAgent.SetDestination(transform.position); 
         }
         else
         {
@@ -143,7 +141,6 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        // Stop moving/Keep stopped
         zombieNavMeshAgent.velocity = Vector3.zero;
         zombieNavMeshAgent.isStopped = true;
         transform.LookAt(player);
@@ -159,22 +156,19 @@ public class Enemy : MonoBehaviour
     {
         if (isRanged && enemyType == EnemyType.Skeleton)
         {
-            // Ranged Attack
+            // Ataque a distancia
             if (projectilePrefab != null)
             {
-                // Use firePoint if available, else somewhat in front and UP
                 Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position + transform.forward + Vector3.up * 1.5f;
                 Instantiate(projectilePrefab, spawnPos, transform.rotation);
             }
-            // Trigger animation if available
              zombieAnimator.SetTrigger(attackTrigger); 
         }
         else
         {
-             // Melee Attack
+             // Ataque cuerpo a cuerpo
              zombieAnimator.SetTrigger(attackTrigger);
              
-             // Apply damage directly if in range
              if (Vector3.Distance(transform.position, player.position) <= attackRange)
              {
                  PlayerManager pm = player.GetComponent<PlayerManager>();
@@ -191,6 +185,9 @@ public class Enemy : MonoBehaviour
     {
         int damageReceived = collision.gameObject.GetComponent<Damage>().damageAmount;
         health -= damageReceived;
+        
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayEnemyHit();
+
         GameObject newVFX = Instantiate(SFX_Explosion, collision.transform.position, Quaternion.identity);
         Destroy(newVFX, 2f);
         if (health > 0)

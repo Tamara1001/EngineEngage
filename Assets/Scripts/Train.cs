@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class Train : MonoBehaviour
 {
-    [Tooltip("Movement speed of the train")]
     public float speed = 5f;
 
-    [Tooltip("Distance the train moves per zone completion")]
     public float distanceBetweenStations = 45f;
 
     public void MoveToNextStation()
@@ -23,6 +21,5 @@ public class Train : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos; // Ensure exact finish
-        Debug.Log("Train: Arrived at next station.");
     }
 }

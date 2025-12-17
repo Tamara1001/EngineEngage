@@ -10,11 +10,9 @@ public class EnemyProjectile : MonoBehaviour
     {
         Destroy(gameObject, lifeTime);
         
-        // Ensure collider is trigger
         Collider col = GetComponent<Collider>();
         if (col != null) col.isTrigger = true;
         
-        // Ensure Rigidbody exists for trigger detection
         if (GetComponent<Rigidbody>() == null)
         {
             Rigidbody rb = gameObject.AddComponent<Rigidbody>();

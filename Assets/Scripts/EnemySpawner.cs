@@ -10,9 +10,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("Enemy Prefabs (0: Zombie, 1: Mummy, 2: Skeleton)")]
     public List<GameObject> enemyPrefabs; 
 
-    // public float spawnInterval = 3f; // Removed per user request
     public bool isActive = false;
-    private bool hasSpawned = false; // Track if we messed up or finished
+    private bool hasSpawned = false;
 
     void Start()
     {
@@ -24,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void ActivateSpawner()
     {
-        if (hasSpawned) return; // Prevent double activation
+        if (hasSpawned) return;
         hasSpawned = true;
         isActive = true;
         SpawnEnemy();
@@ -34,7 +33,6 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyPrefabs == null || enemyPrefabs.Count == 0)
         {
-             Debug.LogWarning("EnemySpawner: No prefabs assigned!");
              return;
         }
 
@@ -83,11 +81,7 @@ public class EnemySpawner : MonoBehaviour
             if (newEnemyScript != null)
             {
                 newEnemyScript.originZone = this.zoneType;
-                Debug.Log($"Spawner: Spawned enemy. Assigned Origin Zone: {this.zoneType}");
-            }
-            else
-            {
-                Debug.LogError("Spawner: Spawned object does not have Enemy script!");
+                Debug.Log($"Spawner: Enemigo de la zona: {this.zoneType}");
             }
         }
     }

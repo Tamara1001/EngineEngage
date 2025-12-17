@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlayerManager : MonoBehaviour
@@ -16,12 +17,10 @@ public class PlayerManager : MonoBehaviour
 
 
     private MyWeapon MyWeapon;
-    public TextMeshProUGUI vidaText;
+    public Image healthBar;
     public TextMeshProUGUI recargandoText;
     public TextMeshProUGUI balasText;
     public TextMeshProUGUI cargadoresText;
-
-    // public GameObject panelDerrota; // Moved to GameManager
 
     void Start()
     {
@@ -78,19 +77,18 @@ public class PlayerManager : MonoBehaviour
     public void ReloadZone()
     {
         cargadoresActuales = cargadoresMaximos;
-        Debug.Log("Llenando cargadores");
         Recargar();
         ActualizarUI();
     }
 
     void ActualizarUI()
     {
-        if (vidaText != null)
-            vidaText.text = "Vida: " + vida;
+        if (healthBar != null)
+            healthBar.fillAmount = (float)vida / 100f;
         if (balasText != null)
-            balasText.text = "Balas: " + balasActuales;
+            balasText.text = " " + balasActuales;
         if (cargadoresText != null)
-            cargadoresText.text = "Cargadores: " + cargadoresActuales;
+            cargadoresText.text = " " + cargadoresActuales;
     }
 
     void Derrota()
@@ -105,6 +103,7 @@ public class PlayerManager : MonoBehaviour
     public void ReceiveDamage(int damageAmount)
     {
         vida -= damageAmount;
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayPlayerDamage();
         ActualizarUI();
         if (vida <= 0)
         {

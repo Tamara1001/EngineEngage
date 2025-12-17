@@ -12,11 +12,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI Kills;
     public TextMeshProUGUI ScoreText;
 
-    [Header("Walls to Unlock")]
     public GameObject desertWall;
     public GameObject snowWall;
 
-    [Header("Train Controller")]
     public Train trainController;
 
     public int killsRequiredPerZone = 3;
@@ -32,25 +30,20 @@ public class GameManager : MonoBehaviour
         startTime = Time.time;
         ActivateSpawnersForZone(currentZone);
         UpdateKillUI();
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayBGM();
     }
 
     void Update()
     {
-        // Removed old Update check
     }
 
     public void OnEnemyKilled(EnemySpawner.ZoneType enemyZone)
     {
-        Debug.Log($"GameManager: Enemy Died. Origin Zone: {enemyZone}, Current Zone: {currentZone}");
-        
-        // Only count if the enemy belongs to the current zone
+        // Revisa si el enemigo es de la zona actual
         if (enemyZone == currentZone)
         {
             killCounter++;
-            totalKills++; // Move total kills inside? Or keep it global? 
-                          // User requested "To advance... must kill 3 enemies in that zone."
-                          // Total kills usually tracks eveything. I will keep totalKills global 
-                          // but killCounter specific to zone validation.
+            totalKills++;
             UpdateKillUI();
 
             if (killCounter >= killsRequiredPerZone)
@@ -60,7 +53,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Still count for total stats maybe?
             totalKills++;
         }
     }
@@ -69,17 +61,19 @@ public class GameManager : MonoBehaviour
     {
         killCounter = 0;
         
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayAreaComplete();
+
         switch (currentZone)
         {
             case EnemySpawner.ZoneType.Plains:
                 currentZone = EnemySpawner.ZoneType.Desert;
-                if (desertWall != null) desertWall.SetActive(false); // Unlock Desert
+                if (desertWall != null) desertWall.SetActive(false); // Desbloquar Desierto
                 if (trainController != null) trainController.MoveToNextStation();
                 ActivateSpawnersForZone(EnemySpawner.ZoneType.Desert);
                 break;
             case EnemySpawner.ZoneType.Desert:
                 currentZone = EnemySpawner.ZoneType.Snow;
-                if (snowWall != null) snowWall.SetActive(false); // Unlock Snow
+                if (snowWall != null) snowWall.SetActive(false); // Desbloquar Nieve
                 if (trainController != null) trainController.MoveToNextStation();
                 ActivateSpawnersForZone(EnemySpawner.ZoneType.Snow);
                 break;
@@ -106,39 +100,34 @@ public class GameManager : MonoBehaviour
     {
         if (Kills != null)
         {
-            Kills.text = "Enemies Killed: " + killCounter + " / " + killsRequiredPerZone;
+            Kills.text = killCounter + " / " + killsRequiredPerZone;
         }
     }
 
-    // Keep compatibility for old calls if strictly needed, or remove if we update Enemy.cs
     public void SumarEnemigoEliminado() 
     {
-        // Default to current to default behavior if called from elsewhere? 
-        // Or better, assume it counts. But safely: logic requires zone.
-        // Let's assume Plains for legacy calls or just log warning.
         OnEnemyKilled(currentZone);
     }
 
     public void AddScore(int amount)
     {
         score += amount;
-        Debug.Log($"GameManager: Score updated. Current Score: {score}");
         if (ScoreText != null)
         {
-            ScoreText.text = "Score: " + score;
+            ScoreText.text = " " + score;
         }
     }
 
 
     void Victory()
     {
-        SaveStats(true); // Save Time only on Victory
+        SaveStats(true); // Guarda todo en victoria
         ShowEndGameUI(panelVictoria);
     }
 
     public void TriggerDefeat()
     {
-        SaveStats(false); // Do not save Time on Defeat
+        SaveStats(false); // No guardar tiempo en derrota
         ShowEndGameUI(panelDerrota);
     }
 
@@ -146,14 +135,13 @@ public class GameManager : MonoBehaviour
     {
         float endTime = Time.time - startTime;
         
-        // Update UI
+        // Actualiza UI
         if (finalScoreText != null) finalScoreText.text = "Score: " + score;
         if (finalKillsText != null) finalKillsText.text = "Kills: " + totalKills;
         if (finalTimeText != null) finalTimeText.text = "Time: " + FormatTime(endTime);
 
         Time.timeScale = 0f;
         
-        // Unlock Cursor for UI
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         
@@ -166,30 +154,25 @@ public class GameManager : MonoBehaviour
     {
         float endTime = Time.time - startTime;
 
-        // Save Best Score (Higher is better) - Always save
+        // Guarda Best Score
         int currentBestScore = PlayerPrefs.GetInt("BestScore", 0);
         if (score > currentBestScore)
         {
             PlayerPrefs.SetInt("BestScore", score);
-            Debug.Log("GameManager: New Best Score Saved!");
         }
 
-        // Save Best Kills (Higher is better) - Always save
         int currentBestKills = PlayerPrefs.GetInt("BestKills", 0);
         if (totalKills > currentBestKills)
         {
             PlayerPrefs.SetInt("BestKills", totalKills);
-             Debug.Log("GameManager: New Best Kills Saved!");
         }
 
-        // Save Best Time (Lower is better) - ONLY if Victory
         if (isVictory)
         {
             float currentBestTime = PlayerPrefs.GetFloat("BestTime", 999999f);
             if (endTime < currentBestTime)
             {
                 PlayerPrefs.SetFloat("BestTime", endTime);
-                Debug.Log("GameManager: New Best Time Saved!");
             }
         }
 
