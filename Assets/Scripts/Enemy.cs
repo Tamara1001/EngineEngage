@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour
     private Animator zombieAnimator;
     private NavMeshAgent zombieNavMeshAgent;
     [SerializeField] Transform player;
-    [SerializeField] float chaseInterval = 0.5f;
 
     public enum EnemyType { Zombie, Mummy, Skeleton }
     public EnemyType enemyType;
@@ -34,7 +33,10 @@ public class Enemy : MonoBehaviour
     private int damage;
     private float maxHealth;
     private bool isRanged = false;
-
+    
+    // Track which zone spawned this enemy
+    [HideInInspector]
+    public EnemySpawner.ZoneType originZone;
 
     private string deadTrigger = "Death";
     private string walkAnimationParameter = "MoveSpeed";
@@ -220,7 +222,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Enemigo asesinado");
             isDead = true;
-            gameManager.SumarEnemigoEliminado();
+            gameManager.OnEnemyKilled(originZone);
             zombieAnimator.SetTrigger(deadTrigger);
             zombieNavMeshAgent.isStopped = true;
             Rigidbody rb = GetComponent<Rigidbody>();
@@ -235,7 +237,6 @@ public class Enemy : MonoBehaviour
             {
                 Instantiate(coinPrefab, transform.position, Quaternion.identity);
             }
-            //Destroy(gameObject);
         }
     }
 

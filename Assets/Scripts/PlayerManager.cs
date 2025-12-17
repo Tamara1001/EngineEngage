@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI balasText;
     public TextMeshProUGUI cargadoresText;
 
-    public GameObject panelDerrota;
+    // public GameObject panelDerrota; // Moved to GameManager
 
     void Start()
     {
@@ -93,11 +93,13 @@ public class PlayerManager : MonoBehaviour
             cargadoresText.text = "Cargadores: " + cargadoresActuales;
     }
 
-
     void Derrota()
     {
-        Time.timeScale = 0f;
-        panelDerrota.SetActive(true);
+        GameManager gm = FindFirstObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.TriggerDefeat();
+        }
     }
 
     public void ReceiveDamage(int damageAmount)
