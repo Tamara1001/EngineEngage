@@ -12,29 +12,26 @@ public class MainMenuController : MonoBehaviour
     {
         // Load Score
         int bestScore = PlayerPrefs.GetInt("BestScore", 0);
-        Debug.Log($"MainMenu: Loaded Best Score: {bestScore}");
-        if (bestScoreText != null) bestScoreText.text = "Best Score: " + bestScore;
+        if (bestScoreText != null) bestScoreText.text = "Mejor Puntaje: " + bestScore;
 
         // Load Kills
         int bestKills = PlayerPrefs.GetInt("BestKills", 0);
-        Debug.Log($"MainMenu: Loaded Best Kills: {bestKills}");
-        if (bestKillsText != null) bestKillsText.text = "Most Kills: " + bestKills;
+        if (bestKillsText != null) bestKillsText.text = "Kills Maximas: " + bestKills;
 
         // Load Time
         float bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
-        Debug.Log($"MainMenu: Loaded Best Time: {bestTime}");
         if (bestTimeText != null)
         {
             if (bestTime >= 999999f || bestTime == 0f)
-                bestTimeText.text = "Best Time: --:--";
+                bestTimeText.text = "Tiempo Record: --:--";
             else
-                bestTimeText.text = "Best Time: " + FormatTime(bestTime);
+                bestTimeText.text = "Tiempo Record: " + FormatTime(bestTime);
         }
     }
 
     public void PlayGame()
     {
-        Time.timeScale = 1f; // Ensure time is running
+        Time.timeScale = 1f;
         // Load Scene Index 1 (Game)
         SceneManager.LoadScene(1);
     }

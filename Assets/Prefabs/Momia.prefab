@@ -1445,7 +1445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SFX_Explosion: {fileID: 1337198075554910, guid: 25c7aa9ad705fe143a4d71c1c8deb7d4, type: 3}
-  health: 100
+  health: 25
   healthText: {fileID: 2364961377984569992}
   healthBar: {fileID: 7585249423331865157}
   player: {fileID: 0}
@@ -1454,9 +1454,12 @@ MonoBehaviour:
   coinPrefab: {fileID: 3702275225171295952, guid: 6fb638dd9304e5c4e9fee3ef3591fcf0, type: 3}
   projectilePrefab: {fileID: 0}
   firePoint: {fileID: 0}
-  detectionRange: 15
-  attackRange: 2
-  attackCooldown: 2
+  detectionRange: 30
+  attackRange: 3
+  attackCooldown: 1.5
+  damage: 30
+  moveSpeed: 4
+  isRanged: 0
   originZone: 0
 --- !u!136 &4909082433066671199
 CapsuleCollider:

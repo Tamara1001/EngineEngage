@@ -30,9 +30,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackCooldown = 1.5f;
     private float lastAttackTime;
 
-    private int damage;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private int scoreValue = 10;
     private float maxHealth;
-    private bool isRanged = false;
+    [SerializeField] private bool isRanged = false;
     
     // Track which zone spawned this enemy
     [HideInInspector]
@@ -49,35 +51,13 @@ public class Enemy : MonoBehaviour
         gameManager = FindFirstObjectByType<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         
-        SetupEnemy();
+        // Stats are now set in Inspector (Health, Damage, MoveSpeed, IsRanged)
+        maxHealth = health;
+        zombieNavMeshAgent.speed = moveSpeed;
+
         float randomSpeed = Random.Range(0.8f, 1.2f);
         UpdateUI();
-        //zombieNavMeshAgent.speed = randomSpeed; // Overridden by SetupEnemy
         zombieAnimator.speed = randomSpeed;
-    }
-
-    private void SetupEnemy()
-    {
-        switch (enemyType)
-        {
-            case EnemyType.Zombie:
-                health = 50;
-                damage = 10;
-                zombieNavMeshAgent.speed = 2;
-                break;
-            case EnemyType.Mummy:
-                health = 100;
-                damage = 30;
-                zombieNavMeshAgent.speed = 1;
-                break;
-            case EnemyType.Skeleton:
-                health = 30;
-                damage = 20;
-                zombieNavMeshAgent.speed = 3;
-                isRanged = true;
-                break;
-        }
-        maxHealth = health;
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -235,7 +215,12 @@ public class Enemy : MonoBehaviour
             healthBar.fillAmount = 0;
             if (coinPrefab != null)
             {
-                Instantiate(coinPrefab, transform.position, Quaternion.identity);
+                GameObject coinObj = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+                Coin coinScript = coinObj.GetComponent<Coin>();
+                if (coinScript != null)
+                {
+                    coinScript.scoreAmount = scoreValue;
+                }
             }
         }
     }

@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public GameObject desertWall;
     public GameObject snowWall;
 
+    [Header("Train Controller")]
+    public Train trainController;
+
     public int killsRequiredPerZone = 3;
     private int killCounter = 0;
     public EnemySpawner.ZoneType currentZone = EnemySpawner.ZoneType.Plains;
@@ -71,11 +74,13 @@ public class GameManager : MonoBehaviour
             case EnemySpawner.ZoneType.Plains:
                 currentZone = EnemySpawner.ZoneType.Desert;
                 if (desertWall != null) desertWall.SetActive(false); // Unlock Desert
+                if (trainController != null) trainController.MoveToNextStation();
                 ActivateSpawnersForZone(EnemySpawner.ZoneType.Desert);
                 break;
             case EnemySpawner.ZoneType.Desert:
                 currentZone = EnemySpawner.ZoneType.Snow;
                 if (snowWall != null) snowWall.SetActive(false); // Unlock Snow
+                if (trainController != null) trainController.MoveToNextStation();
                 ActivateSpawnersForZone(EnemySpawner.ZoneType.Snow);
                 break;
             case EnemySpawner.ZoneType.Snow:
