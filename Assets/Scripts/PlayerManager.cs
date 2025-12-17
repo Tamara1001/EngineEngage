@@ -100,9 +100,9 @@ public class PlayerManager : MonoBehaviour
         panelDerrota.SetActive(true);
     }
 
-    public void ReceiveDamage()
+    public void ReceiveDamage(int damageAmount)
     {
-        vida -= 10;
+        vida -= damageAmount;
         ActualizarUI();
         if (vida <= 0)
         {

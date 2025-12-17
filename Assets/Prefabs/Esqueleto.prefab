@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1138545120452467421}
   - component: {fileID: 3174640697993009371}
   m_Layer: 0
-  m_Name: CanvasZombie
+  m_Name: CanvasEsqueleto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,6 +116,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2b97aa1413c4614fa298970b76302be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6150656188808242828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1716974975832244765}
+  m_Layer: 0
+  m_Name: EnemyFire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1716974975832244765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6150656188808242828}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.608, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1553584898744383318}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8201474309502397643
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +369,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.439294
+      value: -6.315924
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -346,7 +377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.503116
+      value: 11.7534275
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -382,7 +413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_Name
-      value: Zombie
+      value: Esqueleto
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       propertyPath: m_TagString
@@ -398,6 +429,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8719426102685528486}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: a4214d179c0076441b8085274670ea6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1716974975832244765}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a4214d179c0076441b8085274670ea6b, type: 3}
       insertIndex: -1
@@ -515,13 +549,13 @@ MonoBehaviour:
   healthBar: {fileID: 7585249423331865157}
   player: {fileID: 0}
   chaseInterval: 0.5
-  enemyType: 0
+  enemyType: 2
   currentState: 0
   coinPrefab: {fileID: 3702275225171295952, guid: 6fb638dd9304e5c4e9fee3ef3591fcf0, type: 3}
-  projectilePrefab: {fileID: 0}
-  firePoint: {fileID: 0}
+  projectilePrefab: {fileID: 2735724356713750327, guid: b696f38d3604ac54cb1b699eef4a18ee, type: 3}
+  firePoint: {fileID: 1716974975832244765}
   detectionRange: 10
-  attackRange: 2
+  attackRange: 8
   attackCooldown: 1.5
 --- !u!136 &4909082433066671199
 CapsuleCollider:

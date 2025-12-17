@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Zombie
   - ReloadZone
+  - Enemy
   layers:
   - Default
   - TransparentFX
